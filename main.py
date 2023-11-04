@@ -15,7 +15,7 @@ sensor.select_gas_heater_profile(0)
 
 while True:
     if sensor.get_sensor_data():
-        output = f"{sensor.data.temperature:.2f * (9/5) + 32}F, {sensor.data.pressure:.2f}hPa, {sensor.data.humidity:.2f}%"
+        output = f"{(sensor.data.temperature * (9/5) + 32):.2f}F, {sensor.data.pressure:.2f}hPa, {sensor.data.humidity:.2f}%"
 
         if sensor.data.heat_stable:
             print(f"{output}, {sensor.data.gas_resistance}Ohms")
