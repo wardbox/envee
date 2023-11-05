@@ -14,7 +14,7 @@ def draw_text_on_lcd(
     draw = ImageDraw.Draw(lcd_image)
 
     # Get text size
-    text_width, text_height = draw.textsize(text, font=font)
+    text_width, text_height = font.getsize(text)
 
     # Calculate the position for the text to be centered
     text_position = ((lcd_width - text_width) // 2, (lcd_height - text_height) // 2)
