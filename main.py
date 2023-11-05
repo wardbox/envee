@@ -1,7 +1,7 @@
 import bme680
 import ST7735
 import time
-from lcd_helper import draw_text_on_lcd
+from utils.lcd_helper import draw_text_on_lcd
 
 # Configuration
 # bme680
@@ -27,8 +27,6 @@ disp = ST7735.ST7735(
     spi_speed_hz=10000000,
 )
 
-disp.begin()
-
 disp_width = disp.width
 disp_height = disp.height
 
@@ -37,7 +35,6 @@ def main():
     try:
         while True:
             if sensor.get_sensor_data():
-                print(sensor.data)
                 sensor_data = []
                 sensor_data.append(f"{(sensor.data.temperature * (9/5) + 32):.2f}F")
                 sensor_data.append(f"{sensor.data.pressure:.2f}hPa")
@@ -50,7 +47,7 @@ def main():
                     lcd_ready_image = draw_text_on_lcd(
                         text=i,
                         font_path="./assets/BebasNeue-Regular.ttf",
-                        font_size=disp_height - 5,
+                        font_size=disp_height - 20,
                         text_color=(255, 87, 51, 255),
                         lcd_height=disp_height,
                         lcd_width=disp_width,
