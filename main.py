@@ -43,7 +43,9 @@ def main():
                 sensor_data.append(f"{sensor.data.humidity:.2f}%")
 
                 if sensor.data.heat_stable:
-                    sensor_data.append(f"{sensor.data.gas_resistance / 1000}kΩ")
+                    sensor_data.append(
+                        f"{round((sensor.data.gas_resistance / 1000),2):.2f}kΩ"
+                    )
 
                 for i in sensor_data:
                     lcd_ready_image = draw_text_on_lcd(
