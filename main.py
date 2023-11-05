@@ -1,4 +1,5 @@
 import bme680
+import st7735
 import time
 
 sensor = bme680.BME680()
@@ -13,12 +14,18 @@ sensor.set_gas_heater_temperature(320)
 sensor.set_gas_heater_duration(150)
 sensor.select_gas_heater_profile(0)
 
-while True:
-    if sensor.get_sensor_data():
-        output = f"{(sensor.data.temperature * (9/5) + 32):.2f}F, {sensor.data.pressure:.2f}hPa, {sensor.data.humidity:.2f}%"
 
-        if sensor.data.heat_stable:
-            print(f"{output}, {sensor.data.gas_resistance}Ohms")
-        else:
-            print(output)
-    time.sleep(1)
+def main():
+    while True:
+        if sensor.get_sensor_data():
+            output = f"{(sensor.data.temperature * (9/5) + 32):.2f}F, {sensor.data.pressure:.2f}hPa, {sensor.data.humidity:.2f}%"
+
+            if sensor.data.heat_stable:
+                print(f"{output}, {sensor.data.gas_resistance}Ohms")
+            else:
+                print(output)
+        time.sleep(1)
+
+
+if __name__ == "__main__":
+    main()

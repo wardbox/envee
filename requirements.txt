@@ -1,0 +1,6 @@
+bme680
+numpy
+Pillow
+RPi.GPIO
+spidev
+st7735
