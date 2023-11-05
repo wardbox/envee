@@ -1,7 +1,6 @@
 import bme680
 import ST7735
 import time
-from PIL import Image, ImageDraw, ImageFont
 from lcd_helper import draw_text_on_lcd
 
 # Configuration

@@ -1,3 +1,6 @@
+from PIL import Image, ImageDraw, ImageFont
+
+
 def draw_text_on_lcd(
     text, font_path, font_size, text_color=(255, 255, 255), lcd_width=160, lcd_height=80
 ):
