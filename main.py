@@ -1,7 +1,11 @@
 import bme680
-import st7735
+import ST7735
 import time
+from PIL import Image, ImageDraw, ImageFont
+from lcd_helper import draw_text_on_lcd
 
+# Configuration
+# bme680
 sensor = bme680.BME680()
 
 sensor.set_humidity_oversample(bme680.OS_2X)
@@ -14,6 +18,21 @@ sensor.set_gas_heater_temperature(320)
 sensor.set_gas_heater_duration(150)
 sensor.select_gas_heater_profile(0)
 
+# st7735
+disp = ST7735.ST7735(
+    port=0,
+    cs=ST7735.BG_SPI_CS_BACK,
+    dc=9,
+    backlight=18,
+    rotation=90,
+    spi_speed_hz=10000000,
+)
+
+disp.begin()
+
+width = disp.width
+height = disp.height
+
 
 def main():
     while True:
@@ -22,9 +41,22 @@ def main():
 
             if sensor.data.heat_stable:
                 print(f"{output}, {sensor.data.gas_resistance}Ohms")
+                lcd_ready_image = draw_text_on_lcd(
+                    f"{sensor.data.temperature}",
+                    "./assets/BebasNeue-Regular.ttf",
+                    20,  # font size
+                    lcd_height=height,
+                    lcd_width=width,
+                )
+                try:
+                    disp.display(lcd_ready_image)
+                except:
+                    print("Exiting...")
+                    disp.set_backlight(0)
+                    exit()
             else:
                 print(output)
-        time.sleep(1)
+        time.sleep(5)
 
 
 if __name__ == "__main__":
