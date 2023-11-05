@@ -20,7 +20,7 @@ def draw_text_on_lcd(
     text_position = ((lcd_width - text_width) // 2, (lcd_height - text_height) // 2)
 
     # Draw text onto the image
-    draw.text(text_position, text, font=font, fill=text_color, anchor="mm")
+    draw.text(text_position, text, font=font, fill=text_color)
 
     # The LCD image is ready to be used with the text
     return lcd_image

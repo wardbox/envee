@@ -39,11 +39,11 @@ def main():
                 sensor_data.append(
                     f"temp\n{(sensor.data.temperature * (9/5) + 32):.2f} 󰔅"
                 )
-                sensor_data.append(f"pres\n{sensor.data.pressure:.2f}hPa 󰓅")
-                sensor_data.append(f"{sensor.data.humidity:.2f}% ")
+                sensor_data.append(f"{sensor.data.pressure:.2f}hPa 󰓅")
+                sensor_data.append(f"{sensor.data.humidity:.2f}%")
 
                 if sensor.data.heat_stable:
-                    sensor_data.append(f"gas res\n{sensor.data.gas_resistance}Ohms 󰙇")
+                    sensor_data.append(f"{sensor.data.gas_resistance / 1000}kΩ")
 
                 for i in sensor_data:
                     lcd_ready_image = draw_text_on_lcd(
