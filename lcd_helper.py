@@ -5,7 +5,7 @@ def draw_text_on_lcd(
     text, font_path, font_size, text_color=(255, 255, 255), lcd_width=160, lcd_height=80
 ):
     # Create a blank image with a white background (or any other color of choice)
-    lcd_image = Image.new("RGB", (lcd_width, lcd_height), (0, 0, 0))
+    lcd_image = Image.new("RGBA", (lcd_width, lcd_height), (0, 0, 0, 0))
 
     # Load a font
     font = ImageFont.truetype(font_path, font_size)
@@ -14,7 +14,7 @@ def draw_text_on_lcd(
     draw = ImageDraw.Draw(lcd_image)
 
     # Get text size
-    text_width, text_height = font.getsize(text)
+    text_width, text_height = draw.textbbox((0, 0), text, font=font)[2:]
 
     # Calculate the position for the text to be centered
     text_position = ((lcd_width - text_width) // 2, (lcd_height - text_height) // 2)

@@ -29,33 +29,39 @@ disp = ST7735.ST7735(
 
 disp.begin()
 
-width = disp.width
-height = disp.height
+disp_width = disp.width
+disp_height = disp.height
 
 
 def main():
-    while True:
-        if sensor.get_sensor_data():
-            output = f"{(sensor.data.temperature * (9/5) + 32):.2f}F, {sensor.data.pressure:.2f}hPa, {sensor.data.humidity:.2f}%"
+    try:
+        while True:
+            if sensor.get_sensor_data():
+                print(sensor.data)
+                sensor_data = []
+                sensor_data.append(f"{(sensor.data.temperature * (9/5) + 32):.2f}F")
+                sensor_data.append(f"{sensor.data.pressure:.2f}hPa")
+                sensor_data.append(f"{sensor.data.humidity:.2f}%")
 
-            if sensor.data.heat_stable:
-                print(f"{output}, {sensor.data.gas_resistance}Ohms")
-                lcd_ready_image = draw_text_on_lcd(
-                    f"{sensor.data.temperature}",
-                    "./assets/BebasNeue-Regular.ttf",
-                    20,  # font size
-                    lcd_height=height,
-                    lcd_width=width,
-                )
-                try:
+                if sensor.data.heat_stable:
+                    sensor_data.append(f"{sensor.data.gas_resistance}Ohms")
+
+                for i in sensor_data:
+                    lcd_ready_image = draw_text_on_lcd(
+                        text=i,
+                        font_path="./assets/BebasNeue-Regular.ttf",
+                        font_size=disp_height - 5,
+                        text_color=(255, 87, 51, 255),
+                        lcd_height=disp_height,
+                        lcd_width=disp_width,
+                    )
+
                     disp.display(lcd_ready_image)
-                except:
-                    print("Exiting...")
-                    disp.set_backlight(0)
-                    exit()
-            else:
-                print(output)
-        time.sleep(5)
+                    time.sleep(3)
+    except KeyboardInterrupt:
+        print("Exiting...")
+        disp.set_backlight(0)
+        exit()
 
 
 if __name__ == "__main__":
