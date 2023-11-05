@@ -36,18 +36,20 @@ def main():
         while True:
             if sensor.get_sensor_data():
                 sensor_data = []
-                sensor_data.append(f"{(sensor.data.temperature * (9/5) + 32):.2f}F")
-                sensor_data.append(f"{sensor.data.pressure:.2f}hPa")
-                sensor_data.append(f"{sensor.data.humidity:.2f}%")
+                sensor_data.append(
+                    f"temp\n{(sensor.data.temperature * (9/5) + 32):.2f} 󰔅"
+                )
+                sensor_data.append(f"pres\n{sensor.data.pressure:.2f}hPa 󰓅")
+                sensor_data.append(f"{sensor.data.humidity:.2f}% ")
 
                 if sensor.data.heat_stable:
-                    sensor_data.append(f"{sensor.data.gas_resistance}Ohms")
+                    sensor_data.append(f"gas res\n{sensor.data.gas_resistance}Ohms 󰙇")
 
                 for i in sensor_data:
                     lcd_ready_image = draw_text_on_lcd(
                         text=i,
-                        font_path="./assets/BebasNeue-Regular.ttf",
-                        font_size=disp_height - 20,
+                        font_path="./assets/FiraCodeNerdFont-Regular.ttf",
+                        font_size=20,
                         text_color=(255, 87, 51, 255),
                         lcd_height=disp_height,
                         lcd_width=disp_width,
